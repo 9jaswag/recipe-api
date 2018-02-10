@@ -49,3 +49,5 @@ gem 'jwt'
 gem "figaro"
 # Pry for debugging
 gem "pry"
+# controller helper gem
+gem 'simple_command'
