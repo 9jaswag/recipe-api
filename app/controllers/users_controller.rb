@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_before_action :authorize_request, only: %i[create login]
   def create
     user = User.create(user_params)
     if user.save
