@@ -2,7 +2,9 @@ class UsersController < ApplicationController
   def create
     user = User.create(user_params)
     if user.save
-      response = { message: 'User signup successful!' }
+      # authenticate user
+      auth_token = AuthenticateUser.new(user.email, user.password).call
+      response = { message: 'User signup successful!', auth_token: auth_token }
       render json: response, status: :created
     else
       render json: user.errors, status: :bad
