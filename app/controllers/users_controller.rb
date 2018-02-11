@@ -4,8 +4,7 @@ class UsersController < ApplicationController
     if user.save
       # authenticate user
       auth_token = AuthenticateUser.new(user.email, user.password).call
-      response = { message: 'User signup successful!', auth_token: auth_token }
-      render json: response, status: :created
+      json_response('User signup successful!', auth_token, :created)
     else
       render json: user.errors, status: :bad
     end
@@ -14,8 +13,7 @@ class UsersController < ApplicationController
   def login
     # return auth token once user is authenticated
     auth_token = AuthenticateUser.new(auth_params[:email], auth_params[:password]).call
-    response = { message: 'User login successful!', auth_token: auth_token }
-    render json: response, status: :ok
+    json_response('User login successful!', auth_token, :ok)
   end
 
   private
@@ -25,5 +23,10 @@ class UsersController < ApplicationController
 
     def auth_params
       params.permit(:email, :password)
+    end
+
+    def json_response(message, auth_token, status)
+      response = { message: message, auth_token: auth_token }
+      render json: response, status: status
     end
 end
