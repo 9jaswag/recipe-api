@@ -23,14 +23,14 @@ gem 'bcrypt', '~> 3.1.7'
 # gem 'capistrano-rails', group: :development
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem 'rack-cors'
+gem 'rack-cors', :require => 'rack/cors'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # RSpec for testing
   gem 'rspec-rails', '~> 3.7'
-  # For creating test dummy data
+  # For fixtures replacement
   gem "factory_bot_rails", "~> 4.0"
 end
 
@@ -49,3 +49,5 @@ gem 'jwt'
 gem "figaro"
 # Pry for debugging
 gem "pry"
+# controller helper gem
+gem 'simple_command'
