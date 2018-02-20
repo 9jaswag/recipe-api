@@ -5,10 +5,10 @@ class UserMailer < ApplicationMailer
   #
   #   en.user_mailer.account_activation.subject
   #
-  def account_activation
-    @greeting = "Hi"
+  def account_activation(user)
+    @user = user
 
-    mail to: "to@example.org"
+    mail to: user.email, subject: "Account Activation"
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -27,9 +27,10 @@ class UserMailer < ApplicationMailer
   #
   #   en.user_mailer.email_notification.subject
   #
-  def email_notification
-    @greeting = "Hi"
+  def email_notification(user, message)
+    @user = user
+    @message = message
 
-    mail to: "to@example.org"
+    mail to: user.email, subject: "Recipe notification"
   end
 end

@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20180210122820) do
     t.string "reset_digest"
     t.datetime "reset_time"
     t.string "activation_digest"
-    t.boolean "activated"
+    t.boolean "activated", default: false
     t.datetime "activated_time"
     t.boolean "is_admin", default: false
     t.datetime "created_at", null: false
