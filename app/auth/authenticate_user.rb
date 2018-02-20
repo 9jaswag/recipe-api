@@ -7,7 +7,6 @@ class AuthenticateUser
 
   # service entry point. returns an encoded token if user exists
   def call
-    # binding.pry
     JsonWebToken.encode(user_id: user.id) if user
   end
 

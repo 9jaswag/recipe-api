@@ -36,11 +36,11 @@ class UsersController < ApplicationController
     end
 
     def activate_user(user)
-      if user && !user.activated && user.authenticated?(:activation, params[:token])
-        user.activate
-        json_response('Account activation successful!', nil, :created)
-      else
-        json_response('Account activation failed!', nil, :bad)
-      end
+      raise(
+        ExceptionHandler::BadRequest,
+        'Account activation failed!'
+      ) unless user && !user.activated && user.authenticated?(:activation, params[:token])
+      user.activate
+      json_response('Account activation successful!', nil, :created)
     end
 end
