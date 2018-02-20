@@ -1,14 +1,18 @@
 class UsersController < ApplicationController
-  skip_before_action :authorize_request, only: %i[create login]
+  skip_before_action :authorize_request, only: %i[create login edit]
   def create
     user = User.create(user_params)
     if user.save
-      # authenticate user
-      auth_token = AuthenticateUser.new(user.email, user.password).call
-      json_response('User signup successful!', auth_token, :created)
+      user.send_activation_email
+      json_response('Signup successful! Activation link sent to email.', nil, :created)
     else
       render json: user.errors, status: :bad
     end
+  end
+
+  def edit
+    user = User.find_by(email: params[:email])
+    activate_user(user)
   end
 
   def login
@@ -29,5 +33,14 @@ class UsersController < ApplicationController
     def json_response(message, auth_token, status)
       response = { message: message, auth_token: auth_token }
       render json: response, status: status
+    end
+
+    def activate_user(user)
+      raise(
+        ExceptionHandler::BadRequest,
+        'Account activation failed!'
+      ) unless user && !user.activated && user.authenticated?(:activation, params[:token])
+      user.activate
+      json_response('Account activation successful!', nil, :created)
     end
 end
