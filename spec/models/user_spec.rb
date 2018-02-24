@@ -9,6 +9,11 @@ RSpec.describe User, type: :model do
     User.delete_all
   end
 
+  it "has many recipes" do
+    association = User.reflect_on_association(:recipes)
+    expect(association.macro).to eq(:has_many)
+  end
+
   it "is valid" do
     expect(@user).to be_valid
   end
