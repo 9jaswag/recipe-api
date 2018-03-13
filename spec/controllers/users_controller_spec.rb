@@ -3,18 +3,19 @@ require 'rails_helper'
 RSpec.describe 'Users API', type: :request do
   # initialize test data
   let!(:user) { build(:user) }
-  @valid_header = {
-    "Authorization" => JsonWebToken.encode(user_id: user.id),
-    "Content-Type" => "application/json"
-  }
-
-  @invalid_header = {
-    "Authorization" => JsonWebToken.encode({ user_id: user.id }, (Time.now.to_i - 10)),
-    "Content-Type" => "application/json"
-  }
-
   let(:valid_attributes) do
     attributes_for(:user, password_confirmation: user.password)
+  end
+  before do
+    @valid_header = {
+      "Authorization" => JsonWebToken.encode(user_id: user.id),
+      "Content-Type" => "application/json"
+    }
+  
+    @invalid_header = {
+      "Authorization" => JsonWebToken.encode({ user_id: user.id }, (Time.now.to_i - 10)),
+      "Content-Type" => "application/json"
+    }
   end
 
   # POST /signup

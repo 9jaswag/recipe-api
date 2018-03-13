@@ -20,8 +20,8 @@ ActiveRecord::Schema.define(version: 20180224080321) do
     t.string "image"
     t.string "ingredients"
     t.string "preparation_description"
-    t.integer "upvotes"
-    t.integer "downvotes"
+    t.integer "upvotes", default: 0
+    t.integer "downvotes", default: 0
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
