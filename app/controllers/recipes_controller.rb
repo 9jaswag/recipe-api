@@ -1,7 +1,7 @@
 class RecipesController < ApplicationController
   before_action :set_image_path, only: :create
   before_action :is_recipe_owner, only: [:update, :destroy]
-  before_action :paginate_per_page, only: :index
+  before_action :paginate_per_page, only: [:index, :user_favourites]
 
   def index
     recipe = Recipe.all.paginate(:page => params[:page], :per_page => @per_page)
@@ -58,7 +58,7 @@ class RecipesController < ApplicationController
   end
 
   def user_favourites
-    favourites = Favourite.where(user_id: params[:id])
+    favourites = Favourite.where(user_id: params[:id]).paginate(:page => params[:page], :per_page => @per_page)
     render json: favourites
   end
 
@@ -85,4 +85,3 @@ class RecipesController < ApplicationController
     end
 end
 
-# /recipes/:recipe_id/user/:id(.:format) recipes#user_favourites

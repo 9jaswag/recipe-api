@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  resources :recipes, :except => [:destroy, :update] do
+  resources :recipes, except: %i[destroy update] do
     delete '/user/:id' => 'recipes#destroy', as: 'delete'
     patch '/user/:id' => 'recipes#update', as: 'update'
     post '/user/:id' => 'recipes#add_favourite', as: 'add_favourite'
