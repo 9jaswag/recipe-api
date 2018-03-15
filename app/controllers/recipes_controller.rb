@@ -57,6 +57,11 @@ class RecipesController < ApplicationController
     recipe.save!
   end
 
+  def user_favourites
+    favourites = Favourite.where(user_id: params[:id])
+    render json: favourites
+  end
+
   private
     def recipe_params
       params.permit(:name, :image, :ingredients, :preparation_description, :user_id)
