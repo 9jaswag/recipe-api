@@ -4,8 +4,8 @@ Rails.application.routes.draw do
   resources :recipes, :except => [:destroy, :update] do
     delete '/user/:id' => 'recipes#destroy', as: 'delete'
     patch '/user/:id' => 'recipes#update', as: 'update'
-    patch '/user/:id' => 'recipes#add_favourites', as: 'add_favourites'
-    patch '/user/:id' => 'recipes#user_favourites', as: 'user_favourites'
+    post '/user/:id' => 'recipes#add_favourite', as: 'add_favourite'
+    get '/user/:id' => 'recipes#user_favourites', as: 'user_favourites'
     patch '/vote/:action' => 'recipes#upvote_or_downvote', as: 'upvote_or_downvote'
   end
 

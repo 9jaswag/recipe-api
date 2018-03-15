@@ -18,6 +18,7 @@ module ExceptionHandler
     rescue_from ExceptionHandler::BadRequest, with: :four_zero_zero
     rescue_from ExceptionHandler::ExpiredSignature, with: :four_nine_eight
     rescue_from ExceptionHandler::DecodeError, with: :unauthorized_request
+    rescue_from ActiveRecord::RecordNotUnique, with: :four_zero_nine
 
     rescue_from ActiveRecord::RecordNotFound do |e|
       render json: { message: e.message }, status: :not_found
@@ -44,5 +45,10 @@ module ExceptionHandler
   # JSON response with message; Status code 498 - Expired token
   def four_nine_eight(e)
     render json: { message: e.message }, status: :invalid_token
+  end
+
+  # JSON response with message; Status code 409 - Conflict
+  def four_zero_nine(e)
+    render json: { message: e.message }, status: :conflict
   end
 end

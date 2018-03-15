@@ -51,6 +51,12 @@ class RecipesController < ApplicationController
     json_response(recipe, :created)
   end
 
+  def add_favourite
+    recipe = Recipe.find(params[:recipe_id])
+    recipe.favourites.build(user_id: params[:id])
+    recipe.save!
+  end
+
   private
     def recipe_params
       params.permit(:name, :image, :ingredients, :preparation_description, :user_id)
@@ -73,3 +79,5 @@ class RecipesController < ApplicationController
       @per_page = params.has_key?(:per_page) ? params[:per_page] : 10
     end
 end
+
+# /recipes/:recipe_id/user/:id(.:format) recipes#user_favourites
