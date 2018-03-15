@@ -1,6 +1,6 @@
 class RecipesController < ApplicationController
   before_action :set_image_path, only: :create
-  before_action :is_recipe_owner, only: :update
+  before_action :is_recipe_owner, only: [:update, :destroy]
 
   def index
     recipe = Recipe.all
@@ -32,14 +32,19 @@ class RecipesController < ApplicationController
     end
   end
 
+  def destroy
+    recipe = Recipe.find(params[:recipe_id])
+  end
+
   def update
     recipe = Recipe.find(params[:recipe_id])
     recipe.update!(recipe_params)
-    response = {
-      message: 'Recipe updated!',
-      recipe: recipe
-    }
-    json_response(response, :created)
+    # render json: [recipe]
+    # response = {
+    #   message: 'Recipe updated!',
+    #   recipe: recipe
+    # }
+    json_response(recipe, :created)
   end
 
   private
@@ -54,7 +59,7 @@ class RecipesController < ApplicationController
     def is_recipe_owner
       recipe = Recipe.find(params[:recipe_id])
       raise(
-        ExceptionHandler::AuthenticationError, "You can't edit this recipe"
+        ExceptionHandler::AuthenticationError, "You don't have permission for that action"
       ) if recipe.user.id != params[:id].to_i
     rescue ActiveRecord::RecordNotFound
     end
