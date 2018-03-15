@@ -7,4 +7,12 @@ class Recipe < ApplicationRecord
   validates :preparation_description, presence: true
   validates :image, presence: true
   validates :user, presence: true
+
+  def update_recipe_vote_count(recipe, type)
+    if type == 'upvote'
+      update_columns(upvotes: recipe.upvotes + 1)
+    else
+      update_columns(downvotes: recipe.downvotes + 1)
+    end
+  end
 end

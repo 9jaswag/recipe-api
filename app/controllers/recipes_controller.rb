@@ -2,6 +2,7 @@ class RecipesController < ApplicationController
   before_action :set_image_path, only: :create
   before_action :is_recipe_owner, only: [:update, :destroy]
   before_action :paginate_per_page, only: [:index, :user_favourites]
+  before_action :action_type, only: :upvote_or_downvote
 
   def index
     recipe = Recipe.all.paginate(:page => params[:page], :per_page => @per_page)
@@ -62,6 +63,11 @@ class RecipesController < ApplicationController
     render json: favourites
   end
 
+  def upvote_or_downvote
+    recipe = Recipe.find(params[:recipe_id])
+    recipe.update_recipe_vote_count(recipe, params[:type])
+  end
+
   private
     def recipe_params
       params.permit(:name, :image, :ingredients, :preparation_description, :user_id)
@@ -82,6 +88,10 @@ class RecipesController < ApplicationController
     def paginate_per_page
       # set pagination per_page
       @per_page = params.has_key?(:per_page) ? params[:per_page] : 10
+    end
+
+    def action_type
+      raise(ExceptionHandler::BadRequest, "Wrong action type provided") unless params[:type] == 'upvote' || params[:type] == 'downvote'
     end
 end
 
