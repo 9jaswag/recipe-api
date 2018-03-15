@@ -1,9 +1,12 @@
 class RecipesController < ApplicationController
   before_action :set_image_path, only: :create
   before_action :is_recipe_owner, only: [:update, :destroy]
+  before_action :paginate_per_page, only: :index
 
   def index
-    recipe = Recipe.all
+    recipe = Recipe.all.paginate(:page => params[:page], :per_page => @per_page)
+    json_response(recipe) if recipe
+    render json: recipe.errors, status: :bad unless recipe
   end
 
   def create
@@ -34,6 +37,7 @@ class RecipesController < ApplicationController
 
   def destroy
     recipe = Recipe.find(params[:recipe_id])
+    recipe.destroy if recipe
   end
 
   def update
@@ -62,5 +66,10 @@ class RecipesController < ApplicationController
         ExceptionHandler::AuthenticationError, "You don't have permission for that action"
       ) if recipe.user.id != params[:id].to_i
     rescue ActiveRecord::RecordNotFound
+    end
+
+    def paginate_per_page
+      # set pagination per_page
+      @per_page = params.has_key?(:per_page) ? params[:per_page] : 10
     end
 end
