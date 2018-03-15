@@ -53,3 +53,5 @@ gem "pry"
 gem 'simple_command'
 # active model serializer
 gem 'active_model_serializers', '~> 0.10.0'
+# For pagination
+gem 'will_paginate', '~> 3.1.0'
