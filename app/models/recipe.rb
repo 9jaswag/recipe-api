@@ -8,6 +8,16 @@ class Recipe < ApplicationRecord
   validates :image, presence: true
   validates :user, presence: true
 
+  class << self
+    def search(search_term)
+      if search_term.blank?
+        all
+      else
+        where('name LIKE ?', "%#{search_term}%")
+      end
+    end
+  end
+
   def update_recipe_vote_count(recipe, type)
     if type == 'upvote'
       update_columns(upvotes: recipe.upvotes + 1)

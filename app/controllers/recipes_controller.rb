@@ -1,7 +1,7 @@
 class RecipesController < ApplicationController
   before_action :set_image_path, only: :create
   before_action :is_recipe_owner, only: [:update, :destroy]
-  before_action :paginate_per_page, only: [:index, :user_favourites]
+  before_action :paginate_per_page, only: [:index, :user_favourites, :search]
   before_action :action_type, only: :upvote_or_downvote
 
   def index
@@ -66,6 +66,11 @@ class RecipesController < ApplicationController
   def upvote_or_downvote
     recipe = Recipe.find(params[:recipe_id])
     recipe.update_recipe_vote_count(recipe, params[:type])
+  end
+
+  def search
+    recipe = Recipe.search(params[:term]).paginate(:page => params[:page], :per_page => @per_page)
+    render json: recipe, status: :ok
   end
 
   private

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     patch '/vote/:type' => 'recipes#upvote_or_downvote', as: 'upvote_or_downvote'
     post '/user/:user_id/review' => 'reviews#add_review', as: 'add_review'
   end
+  get '/search' => 'recipes#search', as: 'search'
   get '/user/:id/favourites' => 'recipes#user_favourites', as: 'user_favourites'
 
   post '/signup', to: 'users#create'
