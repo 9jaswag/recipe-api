@@ -6,7 +6,8 @@ class ReviewsController < ApplicationController
   end
 
   private
-    def review_params
-      params.permit(:review, :user_id, :recipe_id)
-    end
+
+  def review_params
+    params.permit(:review, :user_id, :recipe_id)
+  end
 end

@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20180315213048) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_recipes_on_name", unique: true
+    t.index ["name"], name: "index_recipes_on_name"
     t.index ["upvotes"], name: "index_recipes_on_upvotes"
     t.index ["user_id"], name: "index_recipes_on_user_id"
   end

@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :review do
-    review "MyString"
+    review 'MyString'
     user nil
     recipe nil
   end

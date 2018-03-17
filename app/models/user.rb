@@ -10,7 +10,7 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
   validates :password, presence: true, length: { minimum: 6 }
   has_secure_password
-  
+
   class << self
     # returns a random token
     def new_token
@@ -42,9 +42,23 @@ class User < ApplicationRecord
     update_columns(activated: true, activated_time: Time.zone.now)
   end
 
-  private
-    def create_activation_digest
-      self.activation_token = User.new_token
-      self.activation_digest = User.digest(activation_token)
+  # activate user account
+  def activate_user(token)
+    unless self && !self.activated && self.authenticated?(:activation, token)
+      raise(
+        ExceptionHandler::BadRequest,
+        'Account activation failed!'
+      )
     end
+    self.activate
+    return true
+    # json_response('Account activation successful!', :created)
+  end
+
+  private
+
+  def create_activation_digest
+    self.activation_token = User.new_token
+    self.activation_digest = User.digest(activation_token)
+  end
 end

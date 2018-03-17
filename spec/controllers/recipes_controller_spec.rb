@@ -6,8 +6,8 @@ RSpec.describe 'Recipes API', type: :request do
   let!(:recipe) { create(:recipe, user: user) }
   before do
     @valid_header = {
-      "Authorization" => JsonWebToken.encode(user_id: user.id),
-      "Content-Type" => "application/json"
+      'Authorization' => JsonWebToken.encode(user_id: user.id),
+      'Content-Type' => 'application/json'
     }
   end
 
@@ -23,7 +23,7 @@ RSpec.describe 'Recipes API', type: :request do
     end
   end
 
-  #POST /recipes
+  # POST /recipes
   # describe 'POST /recipes' do
   #   before do
   #     post "/recipes", headers: @valid_header, params: {
@@ -34,7 +34,7 @@ RSpec.describe 'Recipes API', type: :request do
   #                                                 # user_id: user.id
   #                                               }
   #   end
-    
+
   #   it "creates a new recipe" do
   #     puts response.body
   #     expect(response.body.include?('Pasta Carbonara')).to eq true
