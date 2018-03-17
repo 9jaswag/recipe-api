@@ -13,11 +13,7 @@ class RecipesController < ApplicationController
   def create
     recipe = Recipe.create!(recipe_params)
     if recipe
-      response = {
-        message: 'Recipe created',
-        recipe: recipe
-      }
-      json_response(response, :created)
+      json_response(recipe, :created)
     else
       render json: recipe.errors, status: :bad
     end
@@ -26,11 +22,7 @@ class RecipesController < ApplicationController
   def show
     recipe = Recipe.find(params[:id])
     if recipe
-      response = {
-        message: 'Recipe found',
-        recipe: recipe
-      }
-      json_response(response)
+      json_response(recipe)
     else
       render json: recipe.errors, status: :bad
     end
@@ -44,11 +36,6 @@ class RecipesController < ApplicationController
   def update
     recipe = Recipe.find(params[:recipe_id])
     recipe.update!(recipe_params)
-    # render json: [recipe]
-    # response = {
-    #   message: 'Recipe updated!',
-    #   recipe: recipe
-    # }
     json_response(recipe, :created)
   end
 
@@ -66,11 +53,17 @@ class RecipesController < ApplicationController
   def upvote_or_downvote
     recipe = Recipe.find(params[:recipe_id])
     recipe.update_recipe_vote_count(recipe, params[:type])
+    json_response(recipe)
   end
 
   def search
     recipe = Recipe.search(params[:term]).paginate(page: params[:page], per_page: @per_page)
-    render json: recipe, status: :ok
+    json_response(recipe)
+  end
+
+  def most_votes
+    recipe = Recipe.all.order(upvotes: :desc)
+    json_response(recipe)
   end
 
   private

@@ -1,6 +1,7 @@
 class Recipe < ApplicationRecord
   belongs_to :user
   has_many :favourites
+  has_many :reviews
   # validates_presence_of :name, :ingredients, :preparation_description
   validates :name, presence: true
   validates :ingredients, presence: true

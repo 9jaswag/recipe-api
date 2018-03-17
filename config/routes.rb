@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   end
   get '/search' => 'recipes#search', as: 'search'
   get '/user/:id/favourites' => 'recipes#user_favourites', as: 'user_favourites'
+  get '/recipe/most-votes' => 'recipes#most_votes', as: 'most_votes'
 
   post '/signup', to: 'users#create'
   post '/login', to: 'users#login'
