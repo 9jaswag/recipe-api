@@ -29,13 +29,10 @@ ActiveRecord::Schema.define(version: 20180315213048) do
     t.string "image"
     t.string "ingredients"
     t.string "preparation_description"
-    t.integer "upvotes", default: 0
-    t.integer "downvotes", default: 0
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_recipes_on_name"
-    t.index ["upvotes"], name: "index_recipes_on_upvotes"
     t.index ["user_id"], name: "index_recipes_on_user_id"
   end
 

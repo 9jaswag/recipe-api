@@ -5,13 +5,10 @@ class CreateRecipes < ActiveRecord::Migration[5.1]
       t.string :image
       t.string :ingredients
       t.string :preparation_description
-      t.integer :upvotes, default: 0
-      t.integer :downvotes, default: 0
       t.references :user, foreign_key: true
 
       t.timestamps
     end
     add_index :recipes, :name
-    add_index :recipes, :upvotes
   end
 end
