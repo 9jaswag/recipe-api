@@ -22,7 +22,7 @@ class RecipesController < ApplicationController
   def show
     recipe = Recipe.find(params[:id])
     if recipe
-      json_response(recipe)
+      render json: recipe, serializer: ShowRecipeSerializer
     else
       render json: recipe.errors, status: :bad
     end
