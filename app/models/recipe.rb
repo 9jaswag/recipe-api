@@ -2,6 +2,7 @@ class Recipe < ApplicationRecord
   belongs_to :user
   has_many :favourites
   has_many :reviews
+  has_many :votes
   # validates_presence_of :name, :ingredients, :preparation_description
   validates :name, presence: true
   validates :ingredients, presence: true
@@ -19,11 +20,14 @@ class Recipe < ApplicationRecord
     end
   end
 
-  def update_recipe_vote_count(recipe, type)
+  def update_recipe_vote_count(recipe, type, user_id)
     if type == 'upvote'
-      update_columns(upvotes: recipe.upvotes + 1)
+      current_value = votes.exists? ? votes[0].upvotes : 0
+      votes.build(upvotes: current_value + 1, user_id: user_id)
     else
-      update_columns(downvotes: recipe.downvotes + 1)
+      current_value = votes.exists? ? votes[0].downvotes : 0
+      votes.build(downvotes: current_value + 1, user_id: user_id)
     end
+    save!
   end
 end

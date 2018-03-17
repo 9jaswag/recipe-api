@@ -52,7 +52,7 @@ class RecipesController < ApplicationController
 
   def upvote_or_downvote
     recipe = Recipe.find(params[:recipe_id])
-    recipe.update_recipe_vote_count(recipe, params[:type])
+    recipe.update_recipe_vote_count(recipe, params[:type], params[:id])
     json_response(recipe)
   end
 
