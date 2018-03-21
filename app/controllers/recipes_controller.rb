@@ -62,8 +62,8 @@ class RecipesController < ApplicationController
   end
 
   def most_votes
-    recipe = Recipe.all.order(upvotes: :desc)
-    json_response(recipe)
+    recipe = Recipe.most_voted
+    render json: recipe, serializer: MostVotesSerializer
   end
 
   private

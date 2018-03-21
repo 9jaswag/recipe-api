@@ -1,4 +1,5 @@
 class Recipe < ApplicationRecord
+  # alias :read_attribute_for_serialization :send
   belongs_to :user
   has_many :favourites
   has_many :reviews
@@ -18,6 +19,15 @@ class Recipe < ApplicationRecord
         where('name LIKE ?', "%#{search_term}%")
       end
     end
+
+    def most_voted
+      all.map do |recipe|
+        {
+          recipe: recipe,
+          votes: recipe.get_votes
+        }
+      end
+    end
   end
 
   def update_recipe_vote_count(recipe, type, user_id)
@@ -29,5 +39,13 @@ class Recipe < ApplicationRecord
       votes.build(downvotes: current_value + 1, user_id: user_id)
     end
     save!
+  end
+
+  # get upvote and dowwnvotes for a recipe
+  def get_votes
+    {
+      upvotes: Vote.get_recipe_upvotes(self.id),
+      downvotes: Vote.get_recipe_downvotes(self.id)
+    }
   end
 end

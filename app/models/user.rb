@@ -52,7 +52,6 @@ class User < ApplicationRecord
     end
     self.activate
     return true
-    # json_response('Account activation successful!', :created)
   end
 
   private
