@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  attr_accessor :activation_token
+  attr_accessor :activation_token, :reset_token
   before_save { self.email = email.downcase }
   before_save { self.username = username.downcase }
   before_create :create_activation_digest
@@ -29,6 +29,11 @@ class User < ApplicationRecord
     UserMailer.account_activation(self).deliver_now
   end
 
+  # sends email with password reset link
+  def send_password_reset_email
+    UserMailer.password_reset(self).deliver_now
+  end
+
   # returns true if a token matches the digest
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
@@ -52,6 +57,22 @@ class User < ApplicationRecord
     end
     self.activate
     return true
+  end
+
+  def create_reset_digest
+    self.reset_token = User.new_token
+    update_columns(
+      reset_digest: User.digest(reset_token),
+      reset_time: Time.zone.now
+    )
+  end
+
+  def password_reset_expired?
+    if reset_time && reset_time > 2.hours.ago
+      return true
+    else
+      raise(ExceptionHandler::ExpiredSignature, 'Reset token is expired')
+    end
   end
 
   private

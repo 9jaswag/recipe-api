@@ -15,4 +15,6 @@ Rails.application.routes.draw do
   post '/signup', to: 'users#create'
   post '/login', to: 'users#login'
   get '/activate/:token', to: 'users#edit', as: 'activate'
+  post '/password-reset', to: 'users#reset', as: 'password_reset'
+  patch '/reset/:token', to: 'users#update', as: 'reset'
 end
