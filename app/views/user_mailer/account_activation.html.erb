@@ -49,7 +49,7 @@
 
 <div>
   <h1>Recipe App</h1>
-  <p>Hi <%= @user.username %>,</p>
+  <p>Hi <%= @user.username.capitalize %>,</p>
   <p>Welcome to the Recipe App. Click the link below to activate your account.</p>
   <%= link_to "Activate", activate_url(@user.activation_token, email: @user.email) %>
 </div>
