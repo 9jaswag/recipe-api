@@ -1,0 +1,51 @@
+class Recipe < ApplicationRecord
+  # alias :read_attribute_for_serialization :send
+  belongs_to :user
+  has_many :favourites
+  has_many :reviews
+  has_many :votes
+  # validates_presence_of :name, :ingredients, :preparation_description
+  validates :name, presence: true
+  validates :ingredients, presence: true
+  validates :preparation_description, presence: true
+  validates :image, presence: true
+  validates :user, presence: true
+
+  class << self
+    def search(search_term)
+      if search_term.blank?
+        all
+      else
+        where('name LIKE ?', "%#{search_term}%")
+      end
+    end
+
+    def most_voted
+      all.map do |recipe|
+        {
+          recipe: recipe,
+          votes: recipe.get_votes
+        }
+      end
+    end
+  end
+
+  def update_recipe_vote_count(recipe, type, user_id)
+    if type == 'upvote'
+      current_value = votes.exists? ? votes[0].upvotes : 0
+      votes.build(upvotes: current_value + 1, user_id: user_id)
+    else
+      current_value = votes.exists? ? votes[0].downvotes : 0
+      votes.build(downvotes: current_value + 1, user_id: user_id)
+    end
+    save!
+  end
+
+  # get upvote and dowwnvotes for a recipe
+  def get_votes
+    {
+      upvotes: Vote.get_recipe_upvotes(self.id),
+      downvotes: Vote.get_recipe_downvotes(self.id)
+    }
+  end
+end

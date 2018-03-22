@@ -51,3 +51,7 @@ gem "figaro"
 gem "pry"
 # controller helper gem
 gem 'simple_command'
+# active model serializer
+gem 'active_model_serializers', '~> 0.10.0'
+# For pagination
+gem 'will_paginate', '~> 3.1.0'
