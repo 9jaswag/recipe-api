@@ -1,5 +1,4 @@
 class RecipesController < ApplicationController
-  # before_action :set_image_path, only: :create
   before_action :is_recipe_owner, only: %i[update destroy]
   before_action :paginate_per_page, only: %i[index user_favourites search]
   before_action :action_type, only: :upvote_or_downvote
@@ -70,10 +69,6 @@ class RecipesController < ApplicationController
 
   def recipe_params
     params.permit(:name, :image, :ingredients, :preparation_description, :user_id)
-  end
-
-  def set_image_path
-    params[:image] = 'default image path' unless params[:image]
   end
 
   def is_recipe_owner

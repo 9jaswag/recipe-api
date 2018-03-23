@@ -1,6 +1,6 @@
 class Recipe < ApplicationRecord
   # alias :read_attribute_for_serialization :send
-  has_attached_file :image, default_url: "/images/placeholder.jpg"
+  has_attached_file :image, default_url: "/system/recipes/images/placeholder.jpg"
   belongs_to :user
   has_many :favourites
   has_many :reviews
@@ -10,8 +10,8 @@ class Recipe < ApplicationRecord
   validates :ingredients, presence: true
   validates :preparation_description, presence: true
   # validates :image, presence: true
-  validates_attachment :image, presence: true
-  do_not_validate_attachment_file_type :image
+  validates_attachment :image, content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] }, size: { in: 0..500.kilobytes }
+  # do_not_validate_attachment_file_type :image
   validates :user, presence: true
 
   class << self
