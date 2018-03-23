@@ -1,5 +1,5 @@
 class RecipesController < ApplicationController
-  before_action :set_image_path, only: :create
+  # before_action :set_image_path, only: :create
   before_action :is_recipe_owner, only: %i[update destroy]
   before_action :paginate_per_page, only: %i[index user_favourites search]
   before_action :action_type, only: :upvote_or_downvote
