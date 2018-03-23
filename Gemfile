@@ -55,3 +55,5 @@ gem 'simple_command'
 gem 'active_model_serializers', '~> 0.10.0'
 # For pagination
 gem 'will_paginate', '~> 3.1.0'
+# for image upload
+gem "paperclip", "~> 6.0.0"
