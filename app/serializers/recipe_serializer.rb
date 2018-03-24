@@ -6,6 +6,9 @@ class RecipeSerializer < ActiveModel::Serializer
   has_many :votes
 
   def votes
+    puts '--------------------------- 2'
+    puts object.to_json
+    puts '---------------------------'
     object.get_votes
   end
 end
