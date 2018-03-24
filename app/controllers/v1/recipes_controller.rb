@@ -13,6 +13,10 @@ class V1::RecipesController < ApplicationController
   def create
     recipe = Recipe.create!(recipe_params)
     if recipe
+      recipe = {
+        message: 'recipe created',
+        recipe: recipe
+      }
       json_response(recipe, :created)
     else
       render json: recipe.errors, status: :bad
