@@ -4,13 +4,9 @@ class Vote < ApplicationRecord
   belongs_to :user
 
   class << self
-    def collate_upvotes
-      {
-        upvotes: self.upvotes,
-        downvotes: self.downvotes,
-      }
-    end
-
+    puts '-----------------------------'
+    puts self
+    puts '-----------------------------'
     def upvotes
       all.group(:recipe_id).sum(:upvotes)
     end
