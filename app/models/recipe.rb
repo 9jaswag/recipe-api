@@ -46,9 +46,6 @@ class Recipe < ApplicationRecord
 
   # get upvote and dowwnvotes for a recipe
   def get_votes
-    puts '-------------------- 3'
-    puts self.to_json
-    puts '-------------------- 3'
     {
       upvotes: Vote.get_recipe_upvotes(self.id),
       downvotes: Vote.get_recipe_downvotes(self.id)

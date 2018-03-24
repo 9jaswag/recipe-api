@@ -13,9 +13,6 @@ class V1::RecipesController < ApplicationController
   def create
     recipe = Recipe.create!(recipe_params)
     if recipe
-      puts '===================== 1'
-      puts recipe.to_json
-      puts '====================='
       json_response(recipe, :created)
     else
       render json: recipe.errors, status: :bad
