@@ -1,4 +1,4 @@
-class RecipesController < ApplicationController
+class V1::RecipesController < ApplicationController
   before_action :set_image_path, only: :create
   before_action :is_recipe_owner, only: %i[update destroy]
   before_action :paginate_per_page, only: %i[index user_favourites search]
