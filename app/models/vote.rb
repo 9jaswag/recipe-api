@@ -20,11 +20,13 @@ class Vote < ApplicationRecord
     end
 
     def get_recipe_upvotes(recipe_id)
-      where(recipe_id: recipe_id).sum(:upvotes)
+      recipe = where(recipe_id: recipe_id)
+      recipe.sum(:upvotes) if recipe else 0
     end
 
     def get_recipe_downvotes(recipe_id)
-      where(recipe_id: recipe_id).sum(:downvotes)
+      recipe = where(recipe_id: recipe_id)
+      recipe.sum(:downvotes) if recipe else 0
     end
   end
 end

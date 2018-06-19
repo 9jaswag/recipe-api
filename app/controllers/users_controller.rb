@@ -1,4 +1,4 @@
-module V1
+# module V1
   class UsersController < ApplicationController
     skip_before_action :authorize_request, only: %i[create login edit update]
     def create
@@ -56,4 +56,4 @@ module V1
       params.permit(:password, :password_confirmation)
     end
   end
-end
+# end
