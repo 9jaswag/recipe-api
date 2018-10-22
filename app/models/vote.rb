@@ -6,8 +6,8 @@ class Vote < ApplicationRecord
   class << self
     def collate_upvotes
       {
-        upvotes: self.upvotes,
-        downvotes: self.downvotes,
+        upvotes: upvotes,
+        downvotes: downvotes
       }
     end
 

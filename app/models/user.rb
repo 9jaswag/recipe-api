@@ -49,14 +49,14 @@ class User < ApplicationRecord
 
   # activate user account
   def activate_user(token)
-    unless self && !self.activated && self.authenticated?(:activation, token)
+    unless self && !activated && authenticated?(:activation, token)
       raise(
         ExceptionHandler::BadRequest,
         'Account activation failed!'
       )
     end
-    self.activate
-    return true
+    activate
+    true
   end
 
   def create_reset_digest
@@ -69,7 +69,7 @@ class User < ApplicationRecord
 
   def password_reset_expired?
     if reset_time && reset_time > 2.hours.ago
-      return true
+      true
     else
       raise(ExceptionHandler::ExpiredSignature, 'Reset token is expired')
     end

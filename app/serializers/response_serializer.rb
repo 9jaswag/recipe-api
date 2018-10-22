@@ -2,7 +2,6 @@ class ResponseSerializer < ActiveModel::Serializer
   attributes :recipe, :user
 end
 
-
 def recipe
   RecipeSerializer.new(object.recipe)
 end

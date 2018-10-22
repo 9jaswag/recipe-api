@@ -73,7 +73,7 @@ class V1::RecipesController < ApplicationController
   end
 
   def set_image_path
-    params.delete('image') if params[:image] == "undefined"
+    params.delete('image') if params[:image] == 'undefined'
   end
 
   def is_recipe_owner

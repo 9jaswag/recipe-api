@@ -1,6 +1,6 @@
 class Recipe < ApplicationRecord
   # alias :read_attribute_for_serialization :send
-  has_attached_file :image, default_url: "/system/recipes/images/placeholder.jpg"
+  has_attached_file :image, default_url: '/system/recipes/images/placeholder.jpg'
   belongs_to :user
   has_many :favourites
   has_many :reviews
@@ -10,7 +10,7 @@ class Recipe < ApplicationRecord
   validates :ingredients, presence: true
   validates :preparation_description, presence: true
   # validates :image, presence: true
-  validates_attachment :image, content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] }, size: { in: 0..500.kilobytes }
+  validates_attachment :image, content_type: { content_type: ['image/jpeg', 'image/gif', 'image/png'] }, size: { in: 0..500.kilobytes }
   # do_not_validate_attachment_file_type :image
   validates :user, presence: true
 
@@ -33,7 +33,7 @@ class Recipe < ApplicationRecord
     end
   end
 
-  def update_recipe_vote_count(recipe, type, user_id)
+  def update_recipe_vote_count(_recipe, type, user_id)
     if type == 'upvote'
       current_value = votes.exists? ? votes[0].upvotes : 0
       votes.build(upvotes: current_value + 1, user_id: user_id)
@@ -47,8 +47,8 @@ class Recipe < ApplicationRecord
   # get upvote and dowwnvotes for a recipe
   def get_votes
     {
-      upvotes: Vote.get_recipe_upvotes(self.id),
-      downvotes: Vote.get_recipe_downvotes(self.id)
+      upvotes: Vote.get_recipe_upvotes(id),
+      downvotes: Vote.get_recipe_downvotes(id)
     }
   end
 end

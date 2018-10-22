@@ -9,4 +9,3 @@ class ShowRecipeSerializer < ActiveModel::Serializer
     object.get_votes
   end
 end
-

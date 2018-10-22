@@ -5,9 +5,9 @@ module V1
       review.save!
       json_response(review, :created)
     end
-  
+
     private
-  
+
     def review_params
       params.permit(:review, :user_id, :recipe_id)
     end
